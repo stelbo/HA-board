@@ -1,0 +1,19 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configure HA-board",
+        "description": "Setup HA-board Premium Dashboard for Home Assistant",
+        "data": {
+          "name": "Dashboard Name",
+          "show_all_entities": "Show All Entities"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "HA-board is already configured"
+    }
+  },
+  "title": "HA-board",
+  "description": "Premium Ofspace-style smart home dashboard with real-time device control"
+}
