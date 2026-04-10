@@ -2,12 +2,15 @@
 import logging
 
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 
 _LOGGER = logging.getLogger(__name__)
 
 DOMAIN = "ha_board"
 VERSION = "2.0.0"
+
+PLATFORMS = [Platform.FRONTEND]
 
 
 async def async_setup(hass: HomeAssistant, config: dict) -> bool:
@@ -27,6 +30,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             "config": entry.data,
         }
 
+        await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+
         _LOGGER.info("HA-board setup complete")
         return True
     except Exception as err:
@@ -39,10 +44,12 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     _LOGGER.debug("Unloading HA-board entry: %s", entry.entry_id)
 
     try:
-        if entry.entry_id in hass.data[DOMAIN]:
+        unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+
+        if unload_ok and entry.entry_id in hass.data[DOMAIN]:
             hass.data[DOMAIN].pop(entry.entry_id)
 
-        return True
+        return unload_ok
     except Exception as err:
         _LOGGER.error("Error unloading HA-board: %s", err)
         return False
