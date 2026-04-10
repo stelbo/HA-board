@@ -2,15 +2,12 @@
 import logging
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 
 _LOGGER = logging.getLogger(__name__)
 
 DOMAIN = "ha_board"
 VERSION = "2.0.0"
-
-PLATFORMS = [Platform.FRONTEND]
 
 
 async def async_setup(hass: HomeAssistant, config: dict) -> bool:
@@ -25,12 +22,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     _LOGGER.debug("Setting up HA-board config entry: %s", entry.entry_id)
 
     try:
+        hass.data.setdefault(DOMAIN, {})
         hass.data[DOMAIN][entry.entry_id] = {
             "name": entry.title,
             "config": entry.data,
         }
 
-        await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+        # Load frontend module to register the panel
+        await hass.config_entries.async_forward_entry_setups(entry, ["frontend"])
 
         _LOGGER.info("HA-board setup complete")
         return True
@@ -44,7 +43,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     _LOGGER.debug("Unloading HA-board entry: %s", entry.entry_id)
 
     try:
-        unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+        unload_ok = await hass.config_entries.async_unload_platforms(entry, ["frontend"])
 
         if unload_ok and entry.entry_id in hass.data[DOMAIN]:
             hass.data[DOMAIN].pop(entry.entry_id)
