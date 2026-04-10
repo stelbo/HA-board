@@ -1,0 +1,79 @@
+# ──────────────────────────────────────────────────────────
+# HA-board .gitignore
+# ──────────────────────────────────────────────────────────
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.tox/
+.venv/
+venv/
+env/
+ENV/
+pip-log.txt
+pip-delete-this-directory.txt
+.Python
+
+# Distribution / packaging
+*.whl
+*.tar.gz
+
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+nosetests.xml
+
+# Linting / type checking
+.mypy_cache/
+.ruff_cache/
+
+# Node / JS
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# IDE & editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+.directory
+
+# OS generated
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Desktop.ini
+
+# Home Assistant
+home-assistant_v2.db
+home-assistant.log
+secrets.yaml
+.storage/
+.cloud/
+
+# Temporary files
+*.tmp
+*.bak
+*.orig
+/tmp/
