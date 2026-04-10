@@ -19,16 +19,20 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up HA-board frontend from config entry."""
     _LOGGER.debug("Setting up HA-board frontend")
 
-    async_register_built_in_panel(
-        hass,
-        "ha-board",
-        "HA-board Dashboard",
-        "mdi:home-dashboard",
-        "ha_board",
-        config=entry.data,
-    )
-    _LOGGER.info("HA-board frontend registered successfully")
-    return True
+    try:
+        await async_register_built_in_panel(
+            hass,
+            "ha-board",
+            "HA-board Dashboard",
+            "mdi:home-dashboard",
+            "ha_board",
+            config=entry.data,
+        )
+        _LOGGER.info("HA-board frontend registered successfully")
+        return True
+    except Exception as err:
+        _LOGGER.error("Error registering HA-board frontend: %s", err)
+        return False
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
