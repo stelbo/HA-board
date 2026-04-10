@@ -32,7 +32,6 @@ class HABoardConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         schema = vol.Schema(
             {
                 vol.Required("name", default="HA-board"): str,
-                vol.Optional("show_all_entities", default=True): bool,
             }
         )
 
